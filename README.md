@@ -1,6 +1,6 @@
 # Python Requestsライブラリの完全ガイド
 
-[![Bright Data Promo](https://github.com/luminati-io/LinkedIn-Scraper/raw/main/Proxies%20and%20scrapers%20GitHub%20bonus%20banner.png)](https://brightdata.jp/)
+[![Bright Data Promo](https://github.com/bright-jp/LinkedIn-Scraper/raw/main/Proxies%20and%20scrapers%20GitHub%20bonus%20banner.png)](https://brightdata.jp/)
 
 このチュートリアルでは、WebスクレイピングのためにPythonのRequestsライブラリを扱う方法を紹介します。
 
