@@ -1,71 +1,71 @@
-# A Complete Guide to the Python Requests Library
+# Python Requestsライブラリの完全ガイド
 
-[![Bright Data Promo](https://github.com/luminati-io/LinkedIn-Scraper/raw/main/Proxies%20and%20scrapers%20GitHub%20bonus%20banner.png)](https://brightdata.com/)
+[![Bright Data Promo](https://github.com/luminati-io/LinkedIn-Scraper/raw/main/Proxies%20and%20scrapers%20GitHub%20bonus%20banner.png)](https://brightdata.jp/)
 
-This tutorial demonstrates ways to work with the Requests library in Python for web scraping:
+このチュートリアルでは、WebスクレイピングのためにPythonのRequestsライブラリを扱う方法を紹介します。
 
-- [Introduction to the Requests Library](#introduction-to-the-requests-library)
-- [HTTP Methods](#http-methods)
-- [Breaking Down a Response Object From Requests](#breaking-down-a-response-object-from-requests)
-- [Request Customization With the Python Requests Library](#request-customization-with-the-python-requests-library)
-- [Other Configurations](#other-configurations)
+- [Requestsライブラリの紹介](#introduction-to-the-requests-library)
+- [HTTPメソッド](#http-methods)
+- [Requestsのレスポンスオブジェクトの内訳](#breaking-down-a-response-object-from-requests)
+- [Python Requestsライブラリによるリクエストのカスタマイズ](#request-customization-with-the-python-requests-library)
+- [その他の設定](#other-configurations)
 
-## Introduction to the Requests Library
+## Requestsライブラリの紹介
 
-[`Requests`](https://github.com/psf/requests) is a straightforward and user-friendly HTTP toolkit for Python. In detail, it provides an intuitive API for making HTTP requests and handling responses in an easy and easy to understand way. With over [50k stars on GitHub](https://github.com/psf/requests) and millions of daily downloads, Requests represents the most popular HTTP client in Python.
+[`Requests`](https://github.com/psf/requests)は、Python向けのシンプルでユーザーフレンドリーなHTTPツールキットです。詳細には、HTTPリクエストの送信とレスポンスの処理を、簡単で分かりやすい方法で行うための直感的なAPIを提供します。[GitHubで50k以上のスター](https://github.com/psf/requests)と1日あたり数百万のダウンロードを誇り、RequestsはPythonで最も人気のあるHTTPクライアントを代表しています。
 
-Some of the key features offered by this library include a comprehensive API covering all HTTP methods, dealing with server replies, request customization, login mechanisms, handling secure certificates, and more. On top of that, the Python Requests module supports [HTTP/1.1](https://datatracker.ietf.org/doc/html/rfc2616) out of the box.
+このライブラリが提供する主な機能には、すべてのHTTPメソッドをカバーする包括的なAPI、サーバーからの返信の処理、リクエストのカスタマイズ、ログインメカニズム、セキュア証明書の取り扱いなどがあります。さらに、Python Requestsモジュールはデフォルトで[HTTP/1.1](https://datatracker.ietf.org/doc/html/rfc2616)をサポートします。
 
 ### Setting up
 
-The easiest and recommended way to install Requests is through `pip`. In particular, the `pip` package associated with the Requests library is `requests`. So, you can install the HTTP client with the following command:
+Requestsをインストールする最も簡単で推奨される方法は`pip`を使用することです。特に、Requestsライブラリに関連付けられている`pip`パッケージは`requests`です。そのため、次のコマンドでHTTPクライアントをインストールできます。
 
 ```sh
 pip install requests
 ```
 
-To use `requests` in your Python script, import it with the line below:
+Pythonスクリプトで`requests`を使用するには、以下の行でインポートします。
 
 ```python
 import requests
 ```
 
-Awesome! The Requests package is now installed and ready to be used.
+素晴らしいです！Requestsパッケージがインストールされ、使用できる状態になりました。
 
 ### Use Cases
 
-The main use cases of the Python `requests` library include:
+Pythonの`requests`ライブラリの主なユースケースは以下のとおりです。
 
-- **Making HTTP requests to web servers**: Retrieve data from web servers by sending GET requests.
-- **Consuming APIs**: Send requests to API endpoints and handle their responses, interacting with various web services and accessing their data.
-- **Web scraping**: Fetch HTML documents associated with web pages, which can then be [parsed using libraries like `BeautifulSoup`](https://brightdata.com/blog/how-tos/beautiful-soup-web-scraping) for extracting specific information.
-- **Testing web applications**: Simulate HTTP requests and verify the responses, automating the testing process and ensuring the proper functioning of web services.
-- **Downloading files**: Retrieve files from web servers, such as images, documents, or other media files, by sending HTTP `GET` requests to the respective URLs.
+- **WebサーバーへのHTTPリクエストの送信**: GETリクエストを送信してWebサーバーからデータを取得します。
+- **APIの利用**: APIエンドポイントにリクエストを送信してレスポンスを処理し、さまざまなWebサービスと連携してデータにアクセスします。
+- **Webスクレイピング**: Webページに関連付けられたHTMLドキュメントを取得し、その後、特定の情報を抽出するために[`BeautifulSoup`のようなライブラリでパース](https://brightdata.jp/blog/how-tos/beautiful-soup-web-scraping)できます。
+- **Webアプリケーションのテスト**: HTTPリクエストをシミュレートしてレスポンスを検証し、テストプロセスを自動化してWebサービスが正しく機能することを保証します。
+- **ファイルのダウンロード**: 画像、ドキュメント、その他のメディアファイルなどを、対象URLにHTTP `GET`リクエストを送信してWebサーバーから取得します。
 
 **Methods**
 
-Take a look at the public methods exposed by the `requests` library in the following table:
+次の表で、`requests`ライブラリが公開しているパブリックメソッドをご覧ください。
 
 |     |     |
 | --- | --- |
 | **Method** | **Description** |
-| [`requests.request()`](https://requests.readthedocs.io/en/latest/api/#requests.request) | Sends a custom HTTP request with the specified method to the given URL |
-| [`requests.get()`](https://requests.readthedocs.io/en/latest/api/#requests.get) | Sends a `GET` request to the specified URL |
-| [`requests.post()`](https://requests.readthedocs.io/en/latest/api/#requests.post) | Sends a `POST` request to the specified URL |
-| [`requests.put()`](https://requests.readthedocs.io/en/latest/api/#requests.put) | Sends a `PUT` request to the specified URL |
-| [`requests.patch()`](https://requests.readthedocs.io/en/latest/api/#requests.patch) | Sends a `PATCH` request to the specified URL |
-| [`requests.delete()`](https://requests.readthedocs.io/en/latest/api/#requests.delete) | Sends a `DELETE` request to the specified URL |
-| [`requests.head()`](https://requests.readthedocs.io/en/latest/api/#requests.head) | Sends a `HEAD` request to the specified URL |
+| [`requests.request()`](https://requests.readthedocs.io/en/latest/api/#requests.request) | 指定したメソッドで、指定URLにカスタムHTTPリクエストを送信します |
+| [`requests.get()`](https://requests.readthedocs.io/en/latest/api/#requests.get) | 指定URLに`GET`リクエストを送信します |
+| [`requests.post()`](https://requests.readthedocs.io/en/latest/api/#requests.post) | 指定URLに`POST`リクエストを送信します |
+| [`requests.put()`](https://requests.readthedocs.io/en/latest/api/#requests.put) | 指定URLに`PUT`リクエストを送信します |
+| [`requests.patch()`](https://requests.readthedocs.io/en/latest/api/#requests.patch) | 指定URLに`PATCH`リクエストを送信します |
+| [`requests.delete()`](https://requests.readthedocs.io/en/latest/api/#requests.delete) | 指定URLに`DELETE`リクエストを送信します |
+| [`requests.head()`](https://requests.readthedocs.io/en/latest/api/#requests.head) | 指定URLに`HEAD`リクエストを送信します |
 
-These cover the most useful HTTP request methods. Find out more about how to use them in the [official API documentation](https://requests.readthedocs.io/en/latest/api/).
+これらは、最も有用なHTTPリクエストメソッドをカバーしています。使い方の詳細は、[公式APIドキュメント](https://requests.readthedocs.io/en/latest/api/)をご確認ください。
 
 ## HTTP Methods
 
-See the `requests` Python library in action when dealing with the `GET`, `POST`, `PUT`, `DELETE`, and `HEAD` methods in HTTP.
+HTTPの`GET`、`POST`、`PUT`、`DELETE`、`HEAD`メソッドを扱う際の、Python `requests`ライブラリの動作を確認します。
 
 ### GET
 
-In HTTP, the [`GET`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET) method is used to request a specific resource from a server. This is how you can make an HTTP `GET` request with `requests.get()`:
+HTTPでは、[`GET`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET)メソッドはサーバーから特定のリソースを要求するために使用されます。`requests.get()`でHTTP `GET`リクエストを行う方法は以下のとおりです。
 
 ```python
 import requests
@@ -75,7 +75,7 @@ import requests
 response = requests.get('https://api.example.com/data')
 ```
 
-You can achieve the same result with `requests.request()` as below:
+以下のように`requests.request()`でも同じ結果を得られます。
 
 ```python
 import requests
@@ -83,11 +83,11 @@ import requests
 response = requests.request('GET', 'https://api.example.com/data')
 ```
 
-In this case, you manually have to specify the HTTP method to use with an additional string variable.
+この場合、追加の文字列変数で使用するHTTPメソッドを手動で指定する必要があります。
 
 ### POST
 
-The HTTP `POST` method is used to submit data to a server for further processing. Here is how to make a `POST` request with `requests.post()`:
+HTTP `POST`メソッドは、追加処理のためにデータをサーバーへ送信するために使用されます。`requests.post()`で`POST`リクエストを行う方法は以下のとおりです。
 
 ```python
 import requests
@@ -115,15 +115,15 @@ product = {
 response = requests.post('https://api.example.com/product', data=product)
 ```
 
-Compared to a `GET` request, this time you also have to specify the data to send to the server through the `data` option. `requests` will add this data to the body of the HTTP request.
+`GET`リクエストと比べると、今回は`data`オプションでサーバーに送信するデータも指定する必要があります。`requests`はこのデータをHTTPリクエストのボディに追加します。
 
-For JSON bodies, pass your data object to the `json` option instead of `data`:
+JSONボディの場合は、`data`ではなく`json`オプションにデータオブジェクトを渡します。
 
 ```python
 response = requests.post('https://api.example.com/product', json=product)
 ```
 
-Equivalently, you can perform the same request with `request.request()` as follows:
+同様に、`request.request()`で同じリクエストを行うには次のとおりです。
 
 ```python
 import requests
@@ -149,15 +149,15 @@ response = requests.request('POST', 'https://api.example.com/product', data=prod
 
 ### PUT
 
-The [`PUT`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT) method is used to update or replace a resource on the server. Sending a `PUT` request with the Python `requests` module is easy and follows a similar pattern as in POST requests. What changes is that the method to use is `requests.put()`. Also, the HTTP method string in `requests.request()` will be `'PUT'`.
+[`PUT`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT)メソッドは、サーバー上のリソースを更新または置換するために使用されます。Pythonの`requests`モジュールで`PUT`リクエストを送るのは簡単で、POSTリクエストと似たパターンに従います。変更点は、使用するメソッドが`requests.put()`になることです。また、`requests.request()`内のHTTPメソッド文字列は`'PUT'`になります。
 
 ### PATCH
 
-The [`PATCH`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PATCH) method is used to apply partial modifications to an online resource. Just like for `PUT` requests, sending `PATCH` requests in the Python `requests` library is similar to POST requests. What changes is that the method to employ is `requests.patch()` and the HTTP method string in `requests.request()` is `'PATCH'`.
+[`PATCH`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PATCH)メソッドは、オンラインリソースに部分的な変更を適用するために使用されます。`PUT`リクエストと同様に、Pythonの`requests`ライブラリで`PATCH`リクエストを送る方法はPOSTリクエストに似ています。変更点は、使用するメソッドが`requests.patch()`であり、`requests.request()`内のHTTPメソッド文字列が`'PATCH'`になることです。
 
 ### DELETE
 
-The [`DELETE`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE) method is used to delete a resource identified by a given URI. This is how to make an HTTP `DELETE` request in `requests` using the `delete()` method:
+[`DELETE`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE)メソッドは、指定されたURIで識別されるリソースを削除するために使用されます。`delete()`メソッドを使用して`requests`でHTTP `DELETE`リクエストを行う方法は以下のとおりです。
 
 ```python
 import requests
@@ -167,7 +167,7 @@ import requests
 response = requests.delete('https://api.example.com/products/75')
 ```
 
-Equivalently, you can perform a DELETE request with `requests.request()`:
+同様に、`requests.request()`でもDELETEリクエストを実行できます。
 
 ```python
 import requests
@@ -177,9 +177,9 @@ response = requests.request('DELETE', 'https://api.example.com/products/75')
 
 ### HEAD
 
-The [`HEAD`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/HEAD) method is similar to `GET`, but it only requests the headers of the response, without the actual body content. So, the response returned by the server for a `HEAD` request will be equivalent to that of a `GET` request, but with no body data.
+[`HEAD`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/HEAD)メソッドは`GET`に似ていますが、実際のボディ内容は要求せず、レスポンスのヘッダーのみを要求します。そのため、`HEAD`リクエストに対してサーバーが返すレスポンスは、ボディデータがないことを除き`GET`リクエストのものと同等です。
 
-Use `requests.head()` to make an HTTP `HEAD` request in Python:
+PythonでHTTP `HEAD`リクエストを行うには`requests.head()`を使用します。
 
 ```python
 import requests
@@ -189,7 +189,7 @@ import requests
 response = requests.head('https://api.example.com/resource')
 ```
 
-In the same way, you can perform a `HEAD` request with `requests.request()`:
+同様に、`requests.request()`でも`HEAD`リクエストを実行できます。
 
 ```python
 import requests
@@ -197,15 +197,15 @@ import requests
 response = requests.request('HEAD', 'https://api.example.com/resource')
 ```
 
-## Breaking Down a Response Object From Requests
+## Requestsのレスポンスオブジェクトの内訳
 
-Let's see how to deal with response objects.
+レスポンスオブジェクトの扱い方を見ていきます。
 
 ### Response Object
 
-After making an HTTP request, `requests` will receive the response from the server and map it into a special [Response](https://requests.readthedocs.io/en/latest/api/#requests.Response) object.
+HTTPリクエストを行うと、`requests`はサーバーからレスポンスを受け取り、それを特別な[Response](https://requests.readthedocs.io/en/latest/api/#requests.Response)オブジェクトにマッピングします。
 
-Take a look at the Python `requests` example below:
+以下のPython `requests`の例をご覧ください。
 
 ```python
 import requests
@@ -215,16 +215,16 @@ response = requests.get('http://lumtest.com/myip.json')
 print(response)
 ```
 
-This will return:
+これは次を返します。
 
 ```python
 <Response [200]>
 ```
 
-`response` is a `Response` object that exposes some useful methods and properties. Explore the most important ones in the next sections!
+`response`は、いくつかの便利なメソッドとプロパティを公開している`Response`オブジェクトです。次のセクションで重要なものを確認していきましょう。
 
 > **Warning**:
-> `requests` do not always return a response. In case of errors (e.g., an invalid URL), it raises a `RequestException`. Protect against this exception with the logic below:
+> `requests`は常にレスポンスを返すとは限りません。エラー（例: 無効なURL）の場合、`RequestException`を送出します。以下のロジックでこの例外に備えてください。
 
 ```python
 try:
@@ -240,17 +240,17 @@ print('An error occurred during the request:', e)
 
 ### Status Codes
 
-[Response status codes](https://brightdata.com/blog/proxy-101/proxy-error-codes) are standardized values returned by the server to indicate the success, failure, or any other condition of the request.
+[レスポンスステータスコード](https://brightdata.jp/blog/proxy-101/proxy-error-codes)は、リクエストの成功、失敗、またはその他の状態を示すためにサーバーが返す標準化された値です。
 
-They are particularly helpful in error handling, allowing the client to identify and handle different types of errors appropriately. For example, a `4xx` status code indicates a client-side error (e.g., an invalid request), while a `5xx` status code indicates a server-side error.
+これらはエラーハンドリングで特に役立ち、クライアントがさまざまな種類のエラーを適切に識別して処理できるようにします。たとえば、`4xx`ステータスコードはクライアント側のエラー（例: 無効なリクエスト）を示し、`5xx`ステータスコードはサーバー側のエラーを示します。
 
-Controlling the status code is generally the first step in handling a response in Python using the `requests` library. After making a request, you should always check the status code of the response to determine if the request was successful or not. Access the status code via the `status_code` attribute of the response object:
+一般に、Pythonで`requests`ライブラリを使用してレスポンスを処理する際、ステータスコードの確認は最初のステップです。リクエスト後は常にレスポンスのステータスコードを確認し、リクエストが成功したかどうかを判断するべきです。ステータスコードはレスポンスオブジェクトの`status_code`属性から取得します。
 
 ```python
 response.status_code # 200
 ```
 
-Depending on the status code received, you should use conditional instructions to handle different scenarios appropriately:
+受け取ったステータスコードに応じて、条件分岐で異なるシナリオを適切に処理する必要があります。
 
 ```python
 import requests
@@ -274,9 +274,9 @@ else:
 print(f'Request failed with status code: {response.status_code}')
 ```
 
-In most scenarios, you only need to distinguish between a successful request and an error response. `requests` simplifies that process thanks to a custom [`__bool()__`](https://www.pythontutorial.net/python-oop/python-__bool__/) overload. Specifically, you can use a `Response` object directly in a conditional expression. That will evaluate `True` if the status code is between `200` and `399`, `False` otherwise.
+多くのシナリオでは、成功したリクエストとエラーレスポンスを区別するだけで十分です。`requests`はカスタムの[`__bool()__`](https://www.pythontutorial.net/python-oop/python-__bool__/)オーバーロードにより、そのプロセスを簡素化します。具体的には、`Response`オブジェクトを条件式で直接使用できます。これは、ステータスコードが`200`〜`399`の間であれば`True`、それ以外は`False`と評価されます。
 
-In other words, it is possible to check the successful outcome of a request with this logic:
+言い換えると、次のロジックでリクエストの成功をチェックできます。
 
 ```
 if response:
@@ -292,7 +292,7 @@ print(f'Request failed with status code: {response.status_code}')
 
 ### Response Headers
 
-Access the headers of a server response through the `headers` attribute:
+サーバーレスポンスのヘッダーは`headers`属性からアクセスします。
 
 ```python
 import requests
@@ -304,19 +304,19 @@ response_headers = response.headers
 print(response_headers)
 ```
 
-This will print:
+これは次を出力します。
 
 ```
 {'Server': 'nginx', 'Date': 'Thu, 09 May 2024 12:51:08 GMT', 'Content-Type': 'application/json; charset=utf-8', 'Content-Length': '279', 'Connection': 'keep-alive', 'Cache-Control': 'no-store', 'Access-Control-Allow-Origin': '*'}
 ```
 
-As you can see, `response.headers` returns a dictionary-like object. That means you can access header values by key. For example, assume you want to access the `Content-Type` header of the response. Below is how you can do it:
+ご覧のとおり、`response.headers`は辞書のようなオブジェクトを返します。つまり、キーでヘッダー値にアクセスできます。たとえば、レスポンスの`Content-Type`ヘッダーにアクセスしたいとします。以下のように行えます。
 
 ```python
 response_headers['Content-Type'] # 'application/json; charset=utf-8'
 ```
 
-Since the HTTP specification defines headers as case-insensitive, `requests` enables you to access them without worrying about their capitalization:
+HTTP仕様ではヘッダーは大文字・小文字を区別しないため、`requests`では大文字小文字を気にせずアクセスできます。
 
 ```python
 response_headers['content-type'] # 'application/json; charset=utf-8'
@@ -324,13 +324,13 @@ response_headers['content-type'] # 'application/json; charset=utf-8'
 
 ### Response Content
 
-`requests` provides different attributes and methods to access the payload of a response:
+`requests`は、レスポンスのペイロードにアクセスするための複数の属性とメソッドを提供します。
 
-- [`response.content`](https://requests.readthedocs.io/en/latest/api/#requests.Response.content): Returns the content of the response in bytes.
-- [`response.text`](https://requests.readthedocs.io/en/latest/api/#requests.Response.text): Returns the content of the response as a string in Unicode.
-- [`response.json()`](https://requests.readthedocs.io/en/latest/api/#requests.Response.json): Returns the JSON-encoded content of the response in a dictionary.
+- [`response.content`](https://requests.readthedocs.io/en/latest/api/#requests.Response.content): レスポンスの内容をbytesで返します。
+- [`response.text`](https://requests.readthedocs.io/en/latest/api/#requests.Response.text): レスポンスの内容をUnicodeの文字列として返します。
+- [`response.json()`](https://requests.readthedocs.io/en/latest/api/#requests.Response.json): レスポンスのJSONエンコードされた内容をdictionaryで返します。
 
-See them in action in the following example:
+以下の例で動作を確認してください。
 
 ```python
 import requests
@@ -368,7 +368,7 @@ print(response_json)
 print()
 ```
 
-`http://lumtest.com/myip.json` is a special endpoint that returns information about the IP of the caller. The result of the above snippet will be something like:
+`http://lumtest.com/myip.json`は、呼び出し元のIPに関する情報を返す特別なエンドポイントです。上記スニペットの結果は次のようになります。
 
 ```json
 <class 'bytes'>
@@ -384,19 +384,19 @@ b'{"ip":"45.85.135.110","country":"US","asn":{"asnum":62240,"org_name":"Clouvide
 {'ip': '45.85.135.110', 'country': 'US', 'asn': {'asnum': 62240, 'org_name': 'Clouvider Limited'}, 'geo': {'city': 'Ashburn', 'region': 'VA', 'region_name': 'Virginia', 'postal_code': '20149', 'latitude': 39.0469, 'longitude': -77.4903, 'tz': 'America/New_York', 'lum_city': 'ashburn', 'lum_region': 'va'}}
 ```
 
-Note the three different response formats. As a dictionary, `response.json()` is particularly useful because it simplifies data access:
+3つの異なるレスポンス形式に注目してください。dictionaryとして取得できる`response.json()`は、データアクセスを簡素化するため特に便利です。
 
 ```python
 response_json['country'] # 'US'
 ```
 
-For more information, check out our guide on [how to parse JSON in Python](/blog/how-tos/parse-json-data-with-python).
+詳細については、[PythonでJSONをパースする方法](/blog/how-tos/parse-json-data-with-python)のガイドをご覧ください。
 
 ### Response Cookies
 
-While [HTTP cookies](/blog/web-data/http-cookies) are defined via headers, the `Response` object provides a special `cookies` attribute to deal with them. This returns an [http.cookiejar](https://docs.python.org/3/library/http.cookiejar.html) object with the cookies the server sent back.
+[HTTP Cookie](/blog/web-data/http-cookies)はヘッダーで定義されますが、`Response`オブジェクトはCookieを扱うための特別な`cookies`属性を提供します。これは、サーバーが返したCookieを含む[http.cookiejar](https://docs.python.org/3/library/http.cookiejar.html)オブジェクトを返します。
 
-Take a look at the example below demonstrating how to access cookies from a response object in the Python `requests` library:
+Python `requests`ライブラリでレスポンスオブジェクトからCookieにアクセスする方法を示す以下の例をご覧ください。
 
 ```python
 import requests
@@ -426,7 +426,7 @@ for cookie in cookies:
 print(cookie.name, ':', cookie.value)
 ```
 
-The sample snippet above may produce something like this:
+上記のサンプルスニペットは、次のような出力になる場合があります。
 
 ```
 session_id : be400765483cf840dfbbd39
@@ -436,21 +436,21 @@ user_id : 7164
 expires : Sat, 01 Jan 2025 14:30:00 GMT
 ```
 
-## Request Customization With the Python Requests Library
+## Python Requestsライブラリによるリクエストのカスタマイズ
 
-HTTP requests often involve special filtering parameters and custom headers. Let’s see how to specify them in `requests`.
+HTTPリクエストには、特別なフィルタリングパラメータやカスタムヘッダーが含まれることがよくあります。`requests`でそれらを指定する方法を見ていきます。
 
 ### Query String Parameters
 
-[Query parameters](https://www.semrush.com/blog/url-parameters/), also known as URL parameters, are additional parameters appended to the end of a URL in an HTTP request. They provide extra information to the server about the request, usually on how to filter data and customize the response.
+[クエリパラメータ](https://www.semrush.com/blog/url-parameters/)（URLパラメータとも呼ばれます）は、HTTPリクエストにおいてURLの末尾に追加される追加パラメータです。これらは、通常データのフィルタリング方法やレスポンスのカスタマイズ方法など、リクエストに関する追加情報をサーバーに提供します。
 
-Consider this URL:
+次のURLを考えてください。
 
 `https://api.example.com/data?key1=value1&key2=value2`
 
-In this example, `?key1=value1&key2=value2` is the query string while `key1` and `key2` are query parameters.
+この例では、`?key1=value1&key2=value2`がクエリ文字列で、`key1`と`key2`がクエリパラメータです。
 
-A query string starts with `?` and consists of a key-value pair separated by an equal sign (`=`) and concatenated by `&`. Programmatically specifying this query string in Python code is not always easy, especially when dealing with optional parameters. That is why `requests` offers the `params` option:
+クエリ文字列は`?`で始まり、イコール（`=`）で区切られたキーと値のペアで構成され、`&`で連結されます。このクエリ文字列をPythonコードでプログラム的に指定するのは、特にオプションパラメータを扱う場合、必ずしも簡単ではありません。そのため`requests`は`params`オプションを提供しています。
 
 ```python
 import requests
@@ -474,7 +474,7 @@ params = {
 response = requests.get('https://api.example.com/products', params=params)
 ```
 
-Equivalently, you can pass the parameters to `requests` as a list of tuples:
+同様に、パラメータをタプルのリストとして`requests`に渡すこともできます。
 
 ```python
 import requests
@@ -494,7 +494,7 @@ params = [
 response = requests.get('https://api.example.com/products', params=params)
 ```
 
-Or as a `bytes` string:
+または`bytes`文字列として渡すこともできます。
 
 ```python
 import requests
@@ -508,7 +508,7 @@ response = requests.get('https://api.example.com/products', params=params)
 
 ### Request Headers
 
-To customize the headers in an HTTP request in `requests`, pass them as a dictionary to the `headers` option. For example, you can set a custom `User-Agent` string in `requests` with:
+`requests`でHTTPリクエストのヘッダーをカスタマイズするには、`headers`オプションにdictionaryとして渡します。たとえば、`requests`でカスタムの`User-Agent`文字列を設定するには次のとおりです。
 
 ```python
 import requests
@@ -530,7 +530,7 @@ response = requests.get('https://api.example.com/data', headers=custom_headers)
 
 ### Request Cookies
 
-While HTTP cookies are sent to the server via headers, `requests` provides a dedicated `cookies` option to customize them. Use it as in the following example:
+HTTP Cookieはヘッダー経由でサーバーに送信されますが、`requests`はそれらをカスタマイズするための専用の`cookies`オプションを提供します。以下の例のように使用します。
 
 ```python
 # define custom cookies
@@ -548,17 +548,17 @@ custom_cookies = {
 response = requests.get('https://www.example.com', cookies=custom_cookies)
 ```
 
-Note that `cookies` accepts a dictionary or an `http.cookiejar` object.
+`cookies`はdictionaryまたは`http.cookiejar`オブジェクトを受け付ける点に注意してください。
 
-## Other Configurations
+## その他の設定
 
-`request` offers a rich API and there are many advanced techniques available. Explore some of the most relevant ones!
+`request`は豊富なAPIを提供しており、多くの高度なテクニックが利用可能です。ここでは特に関連性の高いものをいくつか紹介します。
 
 ### Proxy Setup
 
-Proxy integration in `requests` enables you to route your HTTP requests through a proxy server. This is a powerful mechanism to hide your IP address, bypass rate limiters, or access geo-restricted content.
+`requests`におけるプロキシ統合により、HTTPリクエストをプロキシサーバー経由でルーティングできます。これは、IPアドレスを隠したり、レート制限を回避したり、ジオ制限されたコンテンツへアクセスしたりするための強力な仕組みです。
 
-You can integrate a proxy server with the Python `requests` library by using the `proxies` option:
+Python `requests`ライブラリでプロキシサーバーを統合するには、`proxies`オプションを使用します。
 
 ```python
 import requests
@@ -578,13 +578,13 @@ proxy = {
 response = requests.get('https://www.example.com', proxies=proxy)
 ```
 
-For a complete tutorial, follow our guide to [using a proxy with Python Requests](/blog/proxy-101/proxy-with-python-requests).
+完全なチュートリアルについては、[Python Requestsでプロキシを使用する](/blog/proxy-101/proxy-with-python-requests)ガイドをご覧ください。
 
 ### Basic Authentication
 
-[HTTP login mechanisms](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication), better known as “basic login mechanisms,” is a simple login mechanisms scheme built into the HTTP protocol. It involves sending a username and password encoded in [Base64](https://developer.mozilla.org/en-US/docs/Glossary/Base64) format in the `Authorization` header.
+[HTTPログインメカニズム](https://developer.mozilla.org/en-US/docs/Web/HTTP/Authentication)（より一般に「basic login mechanisms」として知られています）は、HTTPプロトコルに組み込まれたシンプルなログインメカニズムのスキームです。これは、[Base64](https://developer.mozilla.org/en-US/docs/Glossary/Base64)形式でエンコードしたユーザー名とパスワードを`Authorization`ヘッダーで送信するものです。
 
-Although you could implement it by manually setting the `Authorization` header, `requests` exposes a dedicated `auth` option for it. This accepts a tuple with the username and password. Use it to deal with basic login mechanisms in the `requests` Python library:
+`Authorization`ヘッダーを手動で設定して実装することもできますが、`requests`はそのための専用の`auth`オプションを公開しています。これはユーザー名とパスワードを含むタプルを受け取ります。Python `requests`ライブラリでbasic login mechanismsを扱うには次のようにします。
 
 ```python
 import requests
@@ -602,9 +602,9 @@ response = requests.get('https://api.example.com/private/users', auth=(username,
 
 ### SSL Certificate Verification
 
-SSL certificate verification is crucial for ensuring secure communication between clients and servers over the Internet. At the same time, there are situations when you trust the destination server and do not need to enforce verification.
+SSL証明書の検証は、インターネット上でクライアントとサーバー間の安全な通信を確保するために重要です。一方で、宛先サーバーを信頼しており、検証を強制する必要がない状況もあります。
 
-In particular, when routing HTTP traffic through proxy servers, you may encounter errors related to SSL certificates. In this case, you might need to disable SSL certificate verification. In `requests`, that is possible via the [`verify`](https://requests.readthedocs.io/en/latest/user/advanced/#ssl-cert-verification) option:
+特に、プロキシサーバー経由でHTTPトラフィックをルーティングしている場合、SSL証明書に関連するエラーが発生することがあります。この場合、SSL証明書の検証を無効化する必要があるかもしれません。`requests`では、[`verify`](https://requests.readthedocs.io/en/latest/user/advanced/#ssl-cert-verification)オプションでそれが可能です。
 
 ```python
 import requests
@@ -616,9 +616,9 @@ response = requests.get('https://api.example.com/data', verify=False)
 
 ### Timeouts
 
-By default, requests automatically waits indefinitely for the server to respond. If the server is experiencing an overload or there is a network slowdown, that behavior can become a problem.
+デフォルトでは、requestsはサーバーの応答を無期限に待機します。サーバーが過負荷状態であったり、ネットワークが低速化していたりすると、この挙動が問題になることがあります。
 
-To avoid slowing down your application while waiting for a response that may never arrive, `requests` has a [`timeout`](https://requests.readthedocs.io/en/latest/user/advanced/#timeouts) option. This accepts an integer or floating number representing the number of seconds to wait for a response:
+到着しないかもしれないレスポンスを待つことでアプリケーションが遅くなるのを避けるために、`requests`には[`timeout`](https://requests.readthedocs.io/en/latest/user/advanced/#timeouts)オプションがあります。これはレスポンスを待機する秒数を表す整数または浮動小数を受け付けます。
 
 ```python
 import requests
@@ -628,7 +628,7 @@ import requests
 response1 = requests.get("https://api.example.com/data", timeout=2)
 ```
 
-Alternatively, `timeout` accepts a tuple with two elements: connect timeout and read timeout. Specify them as in the example below:
+または、`timeout`は2要素のタプル（接続タイムアウト、読み取りタイムアウト）も受け付けます。以下の例のように指定します。
 
 ```python
 import requests
@@ -638,7 +638,7 @@ import requests
 response = requests.get("https://api.example.com/data", timeout=(2.5, 4))
 ```
 
-If the request establishes a connection within the specified connect timeout and receives data within the read timeout, the response will be returned as usual. Otherwise, if the request times out, a `Timeout` exception will be raised:
+指定した接続タイムアウト内に接続が確立し、読み取りタイムアウト内にデータを受信できた場合、レスポンスは通常どおり返されます。そうでない場合、リクエストがタイムアウトすると`Timeout`例外が送出されます。
 
 ```python
 import requests
@@ -656,8 +656,8 @@ print("The request timed out")
 
 ## Conclusion
 
-The Python `requests` module is a useful and popular HTTP library that covers several use cases. However, any HTTP request exposes your public IP. This provides information about who you are and where you live, which is not good for your privacy.
+Pythonの`requests`モジュールは、複数のユースケースをカバーする便利で人気のあるHTTPライブラリです。しかし、HTTPリクエストを行うと公開IPが露出します。これにより、あなたが誰でどこに住んでいるかといった情報が提供されることになり、プライバシーの観点で好ましくありません。
 
-There are several ways to hide your IP address, and the most effective way to achieve greater security and privacy is to use a proxy server. Bright Data controls the best [proxy servers](https://brightdata.com/proxy-types) in the world, serving Fortune 500 companies and more than 20,000 customers.
+IPアドレスを隠す方法はいくつかありますが、より高いセキュリティとプライバシーを実現する最も効果的な方法はプロキシサーバーを使用することです。Bright Dataは世界最高の[proxy servers](https://brightdata.jp/proxy-types)を提供しており、Fortune 500企業や20,000社を超える顧客に利用されています。
 
-Register and start a free trial today!
+今すぐ登録して無料トライアルを開始してください！
